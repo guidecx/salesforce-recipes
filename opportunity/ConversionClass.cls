@@ -54,7 +54,7 @@ global class OpportunityConversion implements beynd.GuideCXProjectConversion {
     }
 
     // will only work if you're using Opportunity Teams and these emails must match
-    // existing accounts in your GuideCX organization. 
+    // existing accounts in your GuideCX organization, otherwise it will fall back to a pending project. 
     SObjectType teamMemberType = Schema.getGlobalDescribe().get('OpportunityTeamMember');
     if (teamMemberType != null) {
       List<SObject> teamMembers = Database.query('SELECT User.FirstName, User.LastName, User.Email, TeamMemberRole FROM OpportunityTeamMember WHERE OpportunityId = :id');
