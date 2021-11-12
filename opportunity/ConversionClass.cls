@@ -81,7 +81,7 @@ global class OpportunityConversion implements beynd.GuideCXProjectConversion {
     // ideally you're making API calls the GuideCX Open API to get the custom field Ids. 
     // https://help.guidecx.com/en/articles/5643502-open-api
     // 
-    // Once you have those Ids then you can provide a value for the like this:
+    // Once you have those Ids then you can provide a value for them like this:
     project.CustomFields = new Map<String, String>
     project.CustomFields.put('0b70415b-d512-4efd-afe3-dee53588b97b', 'Custom Field Value')
     project.CustomFields.put('f6bed2f2-41c0-4591-84db-88b5caff75df', 'Annother Field Value')
