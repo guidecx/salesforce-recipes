@@ -75,7 +75,8 @@ global class OpportunityConversion implements beynd.GuideCXProjectConversion {
 
     // Example: Adding a template to a live project. The values you specify here are the Template SKU. This is typically
     // a product SKU you have in Salesforce and then attach the template in GuideCX. 
-    project.Templates = ['product-sku-1', 'product-sku-2']
+    project.Templates.add('product-sku-1');
+    project.Templates.add('product-sku-2');
 
     // Example: Populating custom fields to a live project
     // ideally you're making API calls the GuideCX Open API to get the custom field Ids. 
