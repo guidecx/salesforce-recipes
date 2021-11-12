@@ -45,16 +45,19 @@ global class OpportunityConversion implements beynd.GuideCXProjectConversion {
     project.Name = opp.Name.left(80).trim();
     project.CashValue = opp.Amount;
     project.StartDate = opp.CloseDate;
-    project.CustomerName = opp.Account.Name;
-    project.CustomerWebsite = opp.Account.Website;
+    project.CustomerName = opp.Account?.Name;
+    
+    // handle opportunities that may not have an account or account website
+    // replace `example.com` with a domain that makes sense for your use case
+    project.CustomerWebsite = opp.Account?.Website || 'example.com';
     
     // adds all opportunity contacts to the project
     for (OpportunityContactRole cr : opp.OpportunityContactRoles) {
       project.addCustomerTeamMember(cr.Contact.Firstname, cr.Contact.LastName, cr.Contact.Email);
     }
 
-    // will only work if you're using Opportunity Teams and these emails must match
-    // existing accounts in your GuideCX organization, otherwise it will fall back to a pending project. 
+    // Example: Adding internal team members to the project team. Note this will only work if you're using 
+    // Opportunity Teams and these emails must match existing accounts in your GuideCX organization. 
     SObjectType teamMemberType = Schema.getGlobalDescribe().get('OpportunityTeamMember');
     if (teamMemberType != null) {
       List<SObject> teamMembers = Database.query('SELECT User.FirstName, User.LastName, User.Email, TeamMemberRole FROM OpportunityTeamMember WHERE OpportunityId = :id');
@@ -69,6 +72,19 @@ global class OpportunityConversion implements beynd.GuideCXProjectConversion {
         }
       }
     }
+
+    // Example: Adding a template to a live project. The values you specify here are the Template SKU. This is typically
+    // a product SKU you have in Salesforce and then attach the template in GuideCX. 
+    project.Templates = ['product-sku-1', 'product-sku-2']
+
+    // Example: Populating custom fields to a live project
+    // ideally you're making API calls the GuideCX Open API to get the custom field Ids. 
+    // https://help.guidecx.com/en/articles/5643502-open-api
+    // 
+    // Once you have those Ids then you can provide a value for the like this:
+    project.CustomFields = new Map<String, String>
+    project.CustomFields.put('0b70415b-d512-4efd-afe3-dee53588b97b', 'Custom Field Value')
+    project.CustomFields.put('f6bed2f2-41c0-4591-84db-88b5caff75df', 'Annother Field Value')
     
     return project;
   }
