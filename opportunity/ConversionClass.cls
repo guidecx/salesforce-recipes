@@ -45,11 +45,11 @@ global class OpportunityConversion implements beynd.GuideCXProjectConversion {
     project.Name = opp.Name.left(80).trim();
     project.CashValue = opp.Amount;
     project.StartDate = opp.CloseDate;
-    project.CustomerName = opp.Account?.Name || 'example';
+    project.CustomerName = opp.Account != null ? opp.Account.Name : 'example';
     
     // handle opportunities that may not have an account or account website
     // replace `example.com` with a domain that makes sense for your use case
-    project.CustomerWebsite = opp.Account?.Website || 'example.com';
+    project.CustomerWebsite = opp.Account?.Website != null ? opp.Account?.Website : 'example.com';
     
     // adds all opportunity contacts to the project
     for (OpportunityContactRole cr : opp.OpportunityContactRoles) {
