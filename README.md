@@ -10,3 +10,4 @@ These are some simple examples of how to extend the default functionality of the
 **Important:** We do not recommend copy/pasting these samples into your Apex. The samples are more pseudo-code than actual implementations.
 
 - [Opportunity](./opportunity)
+- [Case](./case)
