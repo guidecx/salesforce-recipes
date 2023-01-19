@@ -95,6 +95,7 @@ global class OpportunityConversion implements beynd.GuideCXProjectConversion {
    */
   global void linkProjects(Map<Id, Id> sourceProjectMap) {
     List<Opportunity> opportunities = new List<Opportunity>();
+    List<beynd__BeyndProject__c> projects = new List<beynd__BeyndProject__c>();
 
     for (Id source : sourceProjectMap.keySet()) {
       opportunities.add(new Opportunity (
