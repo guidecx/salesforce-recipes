@@ -101,8 +101,18 @@ global class OpportunityConversion implements beynd.GuideCXProjectConversion {
         Id = source,
         beynd__BeyndProject__c = sourceProjectMap.get(source)
       ));
+      
+      // this updates the reverse link, allowing the standard project layout to lookup
+      // the opportunity and associated account. Without this link, then you'll have to
+      // update your layout to reference the Project.Source__Object__c field that is 
+      // already populated on project creation.
+      projects.add(new beynd__BeyndProject__c(
+        Id = projectId,
+        beynd__Opportunity__c = source
+      ));
     }
 
     update opportunities;
+    update projects;
   }
 }
